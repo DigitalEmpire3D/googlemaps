@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Google Map API</title>
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="map-style.css" rel="stylesheet">
+		<style type="text/css">
+			#map {
+				height: 780px;
+			}
+			div.toggle {
+				float: right;
+			}
+			
+		</style>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4" style="margin-left: 95px;"><img class="img-responsive" src="holobrook.png"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"><img class="img-responsive" src="community.png"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-8" id="map"></div>
+			<div class="col-md-4">
+
+				<div class="form-group">
+
+					<div class="checkbox checkbox-header">
+					Toggle amenities...
+						<label class="text-wrapper-label switch">
+							<input id="toggle-trigger" type="checkbox" data-toggle="toggle" data-size="small" value="">
+							<div class="slider round"></div>
+						</label>
+					</div>
+
+					<div class="checkbox form-input">
+					Schools
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="school">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Restaurants
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="restaurant">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Entertainemnt
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="movie_theater">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Shopping
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="shopping_mall">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Medical Centers
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="hospital">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Health &amp; Fitness Facilities
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="gym">
+							<div class="slider round"></div>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="checkbox checkbox-header">
+					Choose map layout...
+					</div>
+
+					<div class="checkbox form-input">
+					Satellite
+						<label class="text-wrapper-label switch">
+							
+							<input id="satellite-map" class="map-type" type="checkbox" data-toggle="toggle" data-size="small" value="satellite">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Terrain
+						<label class="text-wrapper-label switch">
+							
+							<input id="terrain-map" class="map-type" type="checkbox" data-toggle="toggle" data-size="small" value="terrain">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Hybrid
+						<label class="text-wrapper-label switch">
+							
+							<input id="hybrid-map" class="map-type" type="checkbox" data-toggle="toggle" checked data-size="small" value="hybrid">
+							<div class="slider round"></div>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="checkbox checkbox-header">
+						Driving Directions
+					</div>
+					<div class="checkbox form-input" id="directionsPanel" style="height: auto;">Select an icon from the map.</div>
+					<div class="checkbox form-input clear-data"><a id="clear-directions" href="#">CLEAR</a></div>
+				</div>
+
+			</div>
+
+			<!-- <div class="col-md-8" id="map"></div> -->
+
+		</div>
+	</div>
+	
+	<script>
+      var map;
+      var infowindow;
+      var service;
+      var coordinate_1 = 40.417698;
+      var coordinate_2 = -111.899774;
+      var zoom_level = 14;
+      var mapType = "hybrid";
+      var search_radius = 1500;
+
+      var iconBase = 'Icons/';
+	  var iconFull = "";
+
+	  iconFull = iconBase + 'pin-com.png';
+
+      var pyrmont = {lat: coordinate_1, lng: coordinate_2};
+      var directionsDisplay;
+      var directionsService;
+
+
+      // Begin initMap()
+      function initMap() {
+      	
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: zoom_level,
+          center: pyrmont,
+          mapTypeId: mapType,
+          disableDefaultUI: true,
+          gestureHandling: 'none'
+        });
+
+        var request;
+        service = new google.maps.places.PlacesService(map);
+
+        var marker = new google.maps.Marker({
+         	position: pyrmont,
+         	map: map,
+         	icon: iconFull,
+        });
+        
+        directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+
+        directionsService = new google.maps.DirectionsService;
+
+      }
+      // End initMap()
+
+	  	function callback(results, status) {
+	        if (status === google.maps.places.PlacesServiceStatus.OK) {
+	        	for (var i = 0; i < results.length; i++) {
+	        		var place = results[i];
+	        		console.log(place);
+	        		createMarker(results[i]);
+	        	}
+	        }
+	    }
+
+	    var school_markers = [];
+	    var restaurant_markers = [];
+	    var movie_theater_markers = [];
+	    var shopping_mall_markers = [];
+	    var hospital_markers = [];
+	    var gym_markers = [];
+
+
+
+	    function createMarker(place, arrayToUse) {
+
+	    	var placeLoc = place.geometry.location;
+
+	    	if (arrayToUse == "school") {
+	    		iconFull = iconBase + 'pin-schools.png';
+
+	    	} else if(arrayToUse == "restaurant") {
+	    		iconFull = iconBase + 'pin-dining.png';
+
+	    	} else if(arrayToUse == "movie_theater") {
+	    		iconFull = iconBase + 'pin-entertainment.png';
+
+	    	} else if(arrayToUse == "shopping_mall") {
+	    		iconFull = iconBase + 'pin-shopping.png';
+
+	    	} else if(arrayToUse == "hospital") {
+	    		iconFull = iconBase + 'pin-services.png';
+
+	    	} else if(arrayToUse == "gym") {
+	    		iconFull = iconBase + 'pin-trails.png';
+	    	}
+
+
+	    	var marker = new google.maps.Marker({
+	    		map: map,
+          		position: place.geometry.location,
+          		icon: iconFull,
+          		size: new google.maps.Size(20, 32),
+	    	});
+
+	    	if (arrayToUse == "school") {
+	    		school_markers.push(marker);
+
+	    	} else if(arrayToUse == "restaurant") {
+	    		restaurant_markers.push(marker);
+
+	    	} else if(arrayToUse == "movie_theater") {
+	    		movie_theater_markers.push(marker);
+
+	    	} else if(arrayToUse == "shopping_mall") {
+	    		shopping_mall_markers.push(marker);
+
+	    	} else if(arrayToUse == "hospital") {
+	    		hospital_markers.push(marker);
+
+	    	} else if(arrayToUse == "gym") {
+	    		gym_markers.push(marker);
+	    	}
+
+	    	var contentString = '<div class="infowindow">'+
+	    						'</div>';
+
+	    	var infowindow = new google.maps.InfoWindow({
+    			content: contentString
+  			});
+
+	    	google.maps.event.addListener(marker, 'click', function() {
+	    		var latt = place.geometry.location.lat();
+	    		var long = place.geometry.location.lng();
+
+	    		//infowindow.setContent(place.name + "<br /><a data-coord='"+latt+":==:"+long+"' class='driving-directions' href='#'>Drving Directions<a/>");
+	    		infowindow.setContent(place.name);
+	    		infowindow.open(map, this);
+	    		
+	    		calculateAndDisplayRoute(directionsService, directionsDisplay, place.geometry.location.lat(), place.geometry.location.lng())
+	    	});
+
+	    }
+
+
+	    function calculateAndDisplayRoute(directionsService, directionsDisplay, lat, long) {
+	    	var selectedMode = 'DRIVING';
+
+	    	directionsService.route({
+	    		origin: {lat: coordinate_1, lng: coordinate_2},
+	    		destination: {lat: lat, lng: long},
+	    		travelMode: google.maps.TravelMode[selectedMode]
+
+	    	}, function(response, status) {
+	    		if (status == 'OK') {
+	    			//document.getElementById('directionsPanel').innerHTML = "";
+	    			directionsDisplay.setDirections(response);
+	    			console.log(response);
+	    		} else {
+	    			window.alert('Directions request failed due to ' + status);
+	    		}
+	    	});
+	    }
+
+    </script>
+    <script src="map-javascript.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8wJT8MJHSRHupE-sddwzDHSxfDgh9nL0&libraries=places&callback=initMap"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>
