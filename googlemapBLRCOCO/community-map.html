@@ -88,6 +88,20 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<div class="checkbox checkbox-header">
+						Select Popular
+					</div>
+
+					<div class="checkbox form-input">
+						<!-- <label class="text-wrapper-label switch"> -->
+							<select name="select-list">
+								<option value="">Select One</option>
+							</select>
+						<!-- </label> -->
+					</div>
+				</div>
+
 				<!-- <div class="form-group">
 					<div class="checkbox checkbox-header">
 					Choose map layout...
@@ -152,6 +166,91 @@
       var directionsDisplay;
       var directionsService;
 
+      var locations;
+
+      
+
+      var PAFB = {
+      		text: 'Peterson Air Force Base',
+			info: '<strong>Peterson Air Force Base</strong><br>\
+					Platte Avenue & Powers Blvd<br> Colorado Springs, CO 80916<br>\
+					<a href="https://goo.gl/jXZpc1">Get Directions</a>',
+			lat: 38.823785,
+			long: -104.700091
+		};
+
+		var DIA = {
+			text: 'Denver Internation Airport',
+			info: '<strong>Denver Internation Airport</strong><br>\
+					8500 Peña Blvd<br> Denver, CO 80249<br>\
+					<a href="https://goo.gl/S5UEyr">Get Directions</a>',
+			lat: 39.859335,
+			long: -104.673476
+		};
+
+		var DD = {
+			text: 'Downtown Denver',
+			info: '<strong>Downtown Denver</strong><br>\r\
+					1437 Bannock St<br> Denver, CO 80202<br>\
+					<a href="https://goo.gl/mXficM>Get Directions</a>',
+			lat: 39.751448,
+			long: -104.993286
+		};
+
+		var FtCarson = {
+			text: 'Fort Carson',
+			info: '<strong>Fort Carson</strong><br>\r\
+					6001 Wetzel Ave<br> Fort Carson, CO 80913<br>\
+					<a href="https://goo.gl/62LuEC>Get Directions</a>',
+			lat: 38.741854,
+			long: -104.791808
+		};
+	
+		var Shreiver = {
+			text: 'Shreiver Air Force Base',
+			info: '<strong>Shreiver Air Force Base</strong><br>\r\
+					210 Falcon Pkwy<br> Colorado Springs, CO 80912<br>\
+					<a href="https://goo.gl/Dc6zTC>Get Directions</a>',
+			lat: 38.808896,
+			long: -104.525392
+		};
+	
+		var DTC = {
+			text: 'Denver Tech Center',
+			info: '<strong>Denver Tech Center</strong><br>\r\
+					4700 S Syracuse St<br> Denver, CO 80237<br>\
+					<a href="https://goo.gl/XSajUq>Get Directions</a>',
+			lat: 39.628080,
+			long: -104.899879
+		};
+	
+		var DCS = {
+			text: 'Downtown Colorado Springs',
+			info: '<strong>Downtown Colorado Springs</strong><br>\r\
+					Plaza of the Rockies, #404, 111 S Tejon St<br> Colorado Springs, CO 80903<br>\
+					<a href="https://goo.gl/TYh00w>Get Directions</a>',
+			lat: 38.832036,
+			long: -104.823240
+		};
+	
+		var Manitou = {
+			text: 'Manitou Springs',
+			info: '<strong>Manitou Springs</strong><br>\r\
+					606 Manitou Ave<br> Manitou Springs, CO 80829<br>\
+					<a href="https://goo.gl/p10YmB>Get Directions</a>',
+			lat: 38.857797,
+			long: -104.912938
+		};
+	
+		var Community = {
+			text: 'Banning Lewis Ranch',
+			info: '<strong>Banning Lewis Ranch</strong><br>\r\
+					6782 John Muir Trail<br> Colorado Springs, CO 80927<br>\
+					<a href="https://goo.gl/aT25gL>Get Directions</a>',
+			lat: 38.929858,
+			long: -104.661597
+		};
+
 
       // Begin initMap()
     function initMap() {
@@ -170,90 +269,17 @@
 		
 		iconFull3 = iconBase2 + 'pin-com.png';
 		
-		var PAFB = {
-			info: '<strong>Peterson Air Force Base</strong><br>\
-					Platte Avenue & Powers Blvd<br> Colorado Springs, CO 80916<br>\
-					<a href="https://goo.gl/jXZpc1">Get Directions</a>',
-			lat: 38.823785,
-			long: -104.700091
-		};
-
-		var DIA = {
-			info: '<strong>Denver Internation Airport</strong><br>\
-					8500 Peña Blvd<br> Denver, CO 80249<br>\
-					<a href="https://goo.gl/S5UEyr">Get Directions</a>',
-			lat: 39.859335,
-			long: -104.673476
-		};
-
-		var DD = {
-			info: '<strong>Downtown Denver</strong><br>\r\
-					1437 Bannock St<br> Denver, CO 80202<br>\
-					<a href="https://goo.gl/mXficM>Get Directions</a>',
-			lat: 39.751448,
-			long: -104.993286
-		};
-
-		var FtCarson = {
-			info: '<strong>Fort Carson</strong><br>\r\
-					6001 Wetzel Ave<br> Fort Carson, CO 80913<br>\
-					<a href="https://goo.gl/62LuEC>Get Directions</a>',
-			lat: 38.741854,
-			long: -104.791808
-		};
-	
-		var Shreiver = {
-			info: '<strong>Shreiver Air Force Base</strong><br>\r\
-					210 Falcon Pkwy<br> Colorado Springs, CO 80912<br>\
-					<a href="https://goo.gl/Dc6zTC>Get Directions</a>',
-			lat: 38.808896,
-			long: -104.525392
-		};
-	
-		var DTC = {
-			info: '<strong>Denver Tech Center</strong><br>\r\
-					4700 S Syracuse St<br> Denver, CO 80237<br>\
-					<a href="https://goo.gl/XSajUq>Get Directions</a>',
-			lat: 39.628080,
-			long: -104.899879
-		};
-	
-		var DCS = {
-			info: '<strong>Downtown Colorado Springs</strong><br>\r\
-					Plaza of the Rockies, #404, 111 S Tejon St<br> Colorado Springs, CO 80903<br>\
-					<a href="https://goo.gl/TYh00w>Get Directions</a>',
-			lat: 38.832036,
-			long: -104.823240
-		};
-	
-		var Manitou = {
-			info: '<strong>Manitou Springs</strong><br>\r\
-					606 Manitou Ave<br> Manitou Springs, CO 80829<br>\
-					<a href="https://goo.gl/p10YmB>Get Directions</a>',
-			lat: 38.857797,
-			long: -104.912938
-		};
-	
-		var Community = {
-			info: '<strong>Banning Lewis Ranch</strong><br>\r\
-					6782 John Muir Trail<br> Colorado Springs, CO 80927<br>\
-					<a href="https://goo.gl/aT25gL>Get Directions</a>',
-			lat: 38.929858,
-			long: -104.661597
-		};
-	
-		var locations = [
-			[PAFB.info, PAFB.lat, PAFB.long, 0],
-			[DIA.info, DIA.lat, DIA.long, 1],
-			[DD.info, DD.lat, DD.long, 2],
-			[FtCarson.info, FtCarson.lat, FtCarson.long, 3],
-			[Shreiver.info, Shreiver.lat, Shreiver.long, 4],
-			[DTC.info, DTC.lat, DTC.long, 5],
-			[DCS.info, DCS.lat, DCS.long, 6],
-			[Manitou.info, Manitou.lat, Manitou.long, 7],
-			[Community.info, Community.lat, Community.long, 8],
+		locations = [
+			["PAFB", PAFB.text, PAFB.info, PAFB.lat, PAFB.long, 0],
+			["DIA", DIA.text, DIA.info, DIA.lat, DIA.long, 1],
+			["DD", DD.text, DD.info, DD.lat, DD.long, 2],
+			["FtCarson", FtCarson.text, FtCarson.info, FtCarson.lat, FtCarson.long, 3],
+			["Shreiver", Shreiver.text, Shreiver.info, Shreiver.lat, Shreiver.long, 4],
+			["DTC", DTC.text, DTC.info, DTC.lat, DTC.long, 5],
+			["DCS", DCS.text, DCS.info, DCS.lat, DCS.long, 6],
+			["Manitou", Manitou.text, Manitou.info, Manitou.lat, Manitou.long, 7],
+			["Community", Community.text, Community.info, Community.lat, Community.long, 8],
 		];
-
 	  
 
 		var infowindow = new google.maps.InfoWindow({});
@@ -311,10 +337,13 @@
 	    var shopping_mall_markers = [];
 	    var hospital_markers = [];
 	    var gym_markers = [];
+
+	    var static_markers = [];
 			
 	    function createMarker(place, arrayToUse) {
 
 	    	var placeLoc = place.geometry.location;
+	    	//console.log(placeLoc)
 
 	    	if (arrayToUse == "school") {
 	    		iconFull = iconBase + 'pin-schools.png';
@@ -382,10 +411,53 @@
 
 	    }
 
+	    function createMarker2(arrayKey) {
+	    	
+	    	$.each(locations, function(index) {
+	    		if(locations[index][0] == arrayKey) {
+	    			//console.log(locations[index][3])
+	    			var latt = locations[index][3];
+	    			var long = locations[index][4];
+
+	    			var myLatLng = {lat: latt, lng: long};
+
+	    			iconFull = iconBase + 'pin-schools.png';
+
+	    			var marker = new google.maps.Marker({
+			    		map: map,
+		          		position: myLatLng,
+		          		icon: iconFull,
+		          		size: new google.maps.Size(20, 32),
+			    	});
+
+			    	static_markers.push(marker);
+			    	var contentString = '<div class="infowindow">'+
+			    						'</div>';
+
+			    	var infowindow = new google.maps.InfoWindow({
+		    			content: contentString
+		  			});
+
+			    	google.maps.event.addListener(marker, 'click', function() {
+			    		var latt = latt;
+			    		var long = long;
+
+			    		infowindow.setContent(locations[index][1]);
+			    		infowindow.open(map, this);
+			    		
+			    		calculateAndDisplayRoute(directionsService, directionsDisplay, locations[index][3], locations[index][4])
+			    	});
+
+	    		}
+	    	})
+	    }
+
 
 	    function calculateAndDisplayRoute(directionsService, directionsDisplay, lat, long) {
 	    	var selectedMode = 'DRIVING';
-
+	    	//console.log(lat);
+	    	//console.log(long);
+	    	//return false;
 	    	directionsService.route({
 	    		origin: {lat: coordinate_1, lng: coordinate_2},
 	    		destination: {lat: lat, lng: long},

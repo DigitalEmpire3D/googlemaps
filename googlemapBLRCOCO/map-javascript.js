@@ -12,6 +12,22 @@ $(function() {
 		$('#directionsPanel').html("Select an icon from the map.");
 	});
 
+	for(var i = 0; i < locations.length; i++) {
+		//console.log(locations[i]);
+		var optionValue = "<option value='"+locations[i][0]+"'>"+locations[i][1]+"</option>";
+		$('select[name="select-list"]').append(optionValue);
+	}
+
+	$('select[name="select-list"]').on('change', function() {
+		//console.log($(this).val());
+		//movie_theater_markers[i].setMap(null);
+		for(var i = 0; i < static_markers.length; i++) {
+			static_markers[i].setMap(null);
+		}
+		static_markers = [];
+		createMarker2($(this).val());
+	});
+
 
 	$('#satellite-map').on('change', function() {
 		var mapValue = $(this).val();
