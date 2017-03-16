@@ -18,12 +18,12 @@
 	</head>
 	<body>
 	<div class="container-fluid">
-		<div class="row">
+<!-- 		<div class="row">
 			<div class="col-md-4" style="margin-left: 95px;"><img class="img-responsive" src="holobrook.png"></div>
 		</div>
 		<div class="row">
 			<div class="col-md-4"><img class="img-responsive" src="community.png"></div>
-		</div>
+		</div> -->
 		<div class="row">
 			<div class="col-md-8" id="map"></div>
 			<div class="col-md-4">
@@ -55,7 +55,7 @@
 						</label>
 					</div>
 					<div class="checkbox form-input">
-					Entertainemnt
+					Entertainment
 						<label class="text-wrapper-label switch">
 							
 							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="movie_theater">
@@ -88,7 +88,7 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<div class="checkbox checkbox-header">
 					Choose map layout...
 					</div>
@@ -117,7 +117,7 @@
 							<div class="slider round"></div>
 						</label>
 					</div>
-				</div>
+				</div> -->
 
 				<div class="form-group">
 					<div class="checkbox checkbox-header">
@@ -140,48 +140,161 @@
       var service;
       var coordinate_1 = 38.929372;
       var coordinate_2 = -104.663744;
-      var zoom_level = 14;
+      //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
-
       var iconBase = 'Icons/';
 	  var iconFull = "";
 
 	  iconFull = iconBase + 'pin-com.png';
-
+	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
       var directionsDisplay;
       var directionsService;
 
 
       // Begin initMap()
-      function initMap() {
-      	
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: zoom_level,
-          center: pyrmont,
-          mapTypeId: mapType,
-          disableDefaultUI: true,
-          gestureHandling: 'none'
-        });
+    function initMap() {
+      	map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 14,
+			center: pyrmont,
+			mapTypeId: mapType
+		});	
+		var iconBase2 = 'Icons/';
+	
+		var iconFull2 = "";
+	
+		var iconFull3 = "";
+		
+		iconFull2 = iconBase2 + 'pin-dining.png';
+		
+		iconFull3 = iconBase2 + 'pin-com.png';
+		
+		var PAFB = {
+			info: '<strong>Peterson Air Force Base</strong><br>\
+					Platte Avenue & Powers Blvd<br> Colorado Springs, CO 80916<br>\
+					<a href="https://goo.gl/jXZpc1">Get Directions</a>',
+			lat: 38.823785,
+			long: -104.700091
+		};
 
+		var DIA = {
+			info: '<strong>Denver Internation Airport</strong><br>\
+					8500 Peña Blvd<br> Denver, CO 80249<br>\
+					<a href="https://goo.gl/S5UEyr">Get Directions</a>',
+			lat: 39.859335,
+			long: -104.673476
+		};
+
+		var DD = {
+			info: '<strong>Downtown Denver</strong><br>\r\
+					1437 Bannock St<br> Denver, CO 80202<br>\
+					<a href="https://goo.gl/mXficM>Get Directions</a>',
+			lat: 39.751448,
+			long: -104.993286
+		};
+
+		var FtCarson = {
+			info: '<strong>Fort Carson</strong><br>\r\
+					6001 Wetzel Ave<br> Fort Carson, CO 80913<br>\
+					<a href="https://goo.gl/62LuEC>Get Directions</a>',
+			lat: 38.741854,
+			long: -104.791808
+		};
+	
+		var Shreiver = {
+			info: '<strong>Shreiver Air Force Base</strong><br>\r\
+					210 Falcon Pkwy<br> Colorado Springs, CO 80912<br>\
+					<a href="https://goo.gl/Dc6zTC>Get Directions</a>',
+			lat: 38.808896,
+			long: -104.525392
+		};
+	
+		var DTC = {
+			info: '<strong>Denver Tech Center</strong><br>\r\
+					4700 S Syracuse St<br> Denver, CO 80237<br>\
+					<a href="https://goo.gl/XSajUq>Get Directions</a>',
+			lat: 39.628080,
+			long: -104.899879
+		};
+	
+		var DCS = {
+			info: '<strong>Downtown Colorado Springs</strong><br>\r\
+					Plaza of the Rockies, #404, 111 S Tejon St<br> Colorado Springs, CO 80903<br>\
+					<a href="https://goo.gl/TYh00w>Get Directions</a>',
+			lat: 38.832036,
+			long: -104.823240
+		};
+	
+		var Manitou = {
+			info: '<strong>Manitou Springs</strong><br>\r\
+					606 Manitou Ave<br> Manitou Springs, CO 80829<br>\
+					<a href="https://goo.gl/p10YmB>Get Directions</a>',
+			lat: 38.857797,
+			long: -104.912938
+		};
+	
+		var Community = {
+			info: '<strong>Banning Lewis Ranch</strong><br>\r\
+					6782 John Muir Trail<br> Colorado Springs, CO 80927<br>\
+					<a href="https://goo.gl/aT25gL>Get Directions</a>',
+			lat: 38.929858,
+			long: -104.661597
+		};
+	
+		var locations = [
+			[PAFB.info, PAFB.lat, PAFB.long, 0],
+			[DIA.info, DIA.lat, DIA.long, 1],
+			[DD.info, DD.lat, DD.long, 2],
+			[FtCarson.info, FtCarson.lat, FtCarson.long, 3],
+			[Shreiver.info, Shreiver.lat, Shreiver.long, 4],
+			[DTC.info, DTC.lat, DTC.long, 5],
+			[DCS.info, DCS.lat, DCS.long, 6],
+			[Manitou.info, Manitou.lat, Manitou.long, 7],
+			[Community.info, Community.lat, Community.long, 8],
+		];
+
+	  
+
+		var infowindow = new google.maps.InfoWindow({});
+
+		var marker, i;
+	
+		for (i = 0; i < locations.length; i++) {
+			if (i < 8) {
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+				map: map,
+				icon: iconFull2,
+				});
+			} else {
+				marker = new google.maps.Marker({
+				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+				map: map,
+				icon: iconFull3,
+				});
+			}
+			google.maps.event.addListener(marker, 'click', (function (marker, i) {
+				return function () {
+					infowindow.setContent(locations[i][0]);
+					infowindow.open(map, marker);
+				}
+			})(marker, i));
+		}
+		
         var request;
         service = new google.maps.places.PlacesService(map);
 
-        var marker = new google.maps.Marker({
-         	position: pyrmont,
-         	map: map,
-         	icon: iconFull,
-        });
-        
-        directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay = new google.maps.DirectionsRenderer;
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
         directionsService = new google.maps.DirectionsService;
-
-      }
+		
+    }
       // End initMap()
 
+		
+		
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
 	        	for (var i = 0; i < results.length; i++) {
@@ -198,9 +311,7 @@
 	    var shopping_mall_markers = [];
 	    var hospital_markers = [];
 	    var gym_markers = [];
-
-
-
+			
 	    function createMarker(place, arrayToUse) {
 
 	    	var placeLoc = place.geometry.location;
@@ -251,7 +362,7 @@
 	    		gym_markers.push(marker);
 	    	}
 
-	    	var contentString = '<div class="infowindow">'+
+			var contentString = '<div class="infowindow">'+
 	    						'</div>';
 
 	    	var infowindow = new google.maps.InfoWindow({
