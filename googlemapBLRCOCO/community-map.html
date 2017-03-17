@@ -90,7 +90,7 @@
 
 				<div class="form-group">
 					<div class="checkbox checkbox-header">
-						Select Popular
+						Select Point Of Interest
 					</div>
 
 					<div class="checkbox form-input">
@@ -265,7 +265,7 @@
 	
 		var iconFull3 = "";
 		
-		iconFull2 = iconBase2 + 'pin-dining.png';
+		iconFull2 = iconBase2 + 'pin-driving.png';
 		
 		iconFull3 = iconBase2 + 'pin-com.png';
 		
@@ -283,31 +283,35 @@
 	  
 
 		var infowindow = new google.maps.InfoWindow({});
-
-		var marker, i;
+		var marker = new google.maps.Marker({
+         	position: pyrmont,
+         	map: map,
+         	icon: iconFull3,
+        });
+		/*var marker, i;
 	
 		for (i = 0; i < locations.length; i++) {
 			if (i < 8) {
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+				position: new google.maps.LatLng(locations[i][3], locations[i][4]),
 				map: map,
 				icon: iconFull2,
 				});
 			} else {
 				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+				position: new google.maps.LatLng(locations[i][3], locations[i][4]),
 				map: map,
 				icon: iconFull3,
 				});
 			}
 			google.maps.event.addListener(marker, 'click', (function (marker, i) {
 				return function () {
-					infowindow.setContent(locations[i][0]);
+					infowindow.setContent(locations[i][2]);
 					infowindow.open(map, marker);
 				}
 			})(marker, i));
 		}
-		
+		*/
         var request;
         service = new google.maps.places.PlacesService(map);
 
@@ -421,7 +425,7 @@
 
 	    			var myLatLng = {lat: latt, lng: long};
 
-	    			iconFull = iconBase + 'pin-schools.png';
+	    			iconFull = iconBase + 'pin-driving.png';
 
 	    			var marker = new google.maps.Marker({
 			    		map: map,
