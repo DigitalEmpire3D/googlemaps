@@ -104,3 +104,5 @@ a#clear-directions {
 .clear-data {
   text-align: right; border-bottom: none !important;
 }
+
+div.adp-summary + div {display: none !important;}
