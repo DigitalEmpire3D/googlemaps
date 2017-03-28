@@ -90,7 +90,7 @@
 
 				<div class="form-group">
 					<div class="checkbox checkbox-header">
-						Select Popular
+						Point of Interest
 					</div>
 
 					<div class="checkbox form-input">
@@ -240,7 +240,8 @@
       	map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 14,
 			center: pyrmont,
-			mapTypeId: mapType
+			mapTypeId: mapType,
+			gestureHandling: 'none'
 		});	
 		var iconBase2 = 'Icons/';
 	
@@ -265,8 +266,13 @@
 	  
 
 		var infowindow = new google.maps.InfoWindow({});
-
-		var marker, i;
+		var marker = new google.maps.Marker({
+         	position: pyrmont,
+         	map: map,
+         	icon: iconFull3,
+        });
+		
+		/*var marker, i;
 	
 		for (i = 0; i < locations.length; i++) {
 			if (i < 7) {
@@ -288,7 +294,7 @@
 					infowindow.open(map, marker);
 				}
 			})(marker, i));
-		}
+		}*/
 		
         var request;
         service = new google.maps.places.PlacesService(map);
