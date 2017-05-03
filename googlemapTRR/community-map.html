@@ -104,9 +104,6 @@
 				</div>
 
 			</div>
-
-			<!-- <div class="col-md-8" id="map"></div> -->
-
 		</div>
 	</div>
 	
@@ -121,16 +118,12 @@
       var search_radius = 1500;
       var iconBase = 'Icons/';
 	  var iconFull = "";
-
-	  //iconFull = iconBase + 'pin-com.png';
 	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
       var directionsDisplay;
       var directionsService;
 
       var locations;
-
-      
 
       var Boulder = {
       		text: 'Boulder',
@@ -186,7 +179,7 @@
 			zoom: 14,
 			center: pyrmont,
 			mapTypeId: mapType,
-			gestureHandling: 'none'
+			gestureHandling: 'cooperative'
 		});	
 		var iconBase2 = 'Icons/';
 	
@@ -225,8 +218,6 @@
 		
     }
       // End initMap()
-
-		
 		
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
