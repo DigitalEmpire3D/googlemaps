@@ -18,12 +18,6 @@
 	</head>
 	<body>
 	<div class="container-fluid">
-<!-- 		<div class="row">
-			<div class="col-md-4" style="margin-left: 95px;"><img class="img-responsive" src="holobrook.png"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-4"><img class="img-responsive" src="community.png"></div>
-		</div> -->
 		<div class="row">
 			<div class="col-md-8" id="map"></div>
 			<div class="col-md-4">
@@ -101,38 +95,6 @@
 						<!-- </label> -->
 					</div>
 				</div>
-				
-<!-- 				<div class="form-group">
-					<div class="checkbox checkbox-header">
-					Choose map layout...
-					</div>
-
-					<div class="checkbox form-input">
-					Satellite
-						<label class="text-wrapper-label switch">
-							
-							<input id="satellite-map" class="map-type" type="checkbox" data-toggle="toggle" data-size="small" value="satellite">
-							<div class="slider round"></div>
-						</label>
-					</div>
-					<div class="checkbox form-input">
-					Terrain
-						<label class="text-wrapper-label switch">
-							
-							<input id="terrain-map" class="map-type" type="checkbox" data-toggle="toggle" data-size="small" value="terrain">
-							<div class="slider round"></div>
-						</label>
-					</div>
-					<div class="checkbox form-input">
-					Hybrid
-						<label class="text-wrapper-label switch">
-							
-							<input id="hybrid-map" class="map-type" type="checkbox" data-toggle="toggle" checked data-size="small" value="hybrid">
-							<div class="slider round"></div>
-						</label>
-					</div>
-				</div> -->
-
 				<div class="form-group">
 					<div class="checkbox checkbox-header">
 						Driving Directions
@@ -142,9 +104,6 @@
 				</div>
 
 			</div>
-
-			<!-- <div class="col-md-8" id="map"></div> -->
-
 		</div>
 	</div>
 	
@@ -159,16 +118,12 @@
       var search_radius = 1500;
       var iconBase = 'Icons/';
 	  var iconFull = "";
-
-	  //iconFull = iconBase + 'pin-com.png';
 	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
       var directionsDisplay;
       var directionsService;
 
       var locations;
-
-      
 
       var Boulder = {
       		text: 'Boulder',
@@ -217,16 +172,6 @@
 			lat: 40.393866,
 			long: -105.069997
 		};
-	
-		
-		/*var Community = {
-			text: 'Westridge',
-			info: '<strong>Westridge Oakwood Office</strong><br>\r\
-					5314 5600 W, West Valley City, UT 84118',
-			lat: 40.654274,
-			long: -112.025145
-		};*/
-
 
       // Begin initMap()
     function initMap() {
@@ -234,7 +179,7 @@
 			zoom: 14,
 			center: pyrmont,
 			mapTypeId: mapType,
-			gestureHandling: 'none'
+			gestureHandling: 'cooperative'
 		});	
 		var iconBase2 = 'Icons/';
 	
@@ -253,7 +198,6 @@
 			["FtCollins", FtCollins.text, FtCollins.info, FtCollins.lat, FtCollins.long, 3],
 			["Longmont", Longmont.text, Longmont.info, Longmont.lat, Longmont.long, 4],
 			["Loveland", Loveland.text, Loveland.info, Loveland.lat, Loveland.long, 5],
-			//["Community", Community.text, Community.info, Community.lat, Community.long, 7],
 		];
 	  
 
@@ -263,30 +207,6 @@
          	map: map,
          	icon: iconFull3,
         });
-		
-		/*var marker, i;
-	
-		for (i = 0; i < locations.length; i++) {
-			if (i < 7) {
-				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-				map: map,
-				icon: iconFull2,
-				});
-			} else {
-				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-				map: map,
-				icon: iconFull3,
-				});
-			}
-			google.maps.event.addListener(marker, 'click', (function (marker, i) {
-				return function () {
-					infowindow.setContent(locations[i][0]);
-					infowindow.open(map, marker);
-				}
-			})(marker, i));
-		}*/
 		
         var request;
         service = new google.maps.places.PlacesService(map);
@@ -298,8 +218,6 @@
 		
     }
       // End initMap()
-
-		
 		
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
