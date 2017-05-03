@@ -104,9 +104,6 @@
 				</div>
 
 			</div>
-
-			<!-- <div class="col-md-8" id="map"></div> -->
-
 		</div>
 	</div>
 	
@@ -127,8 +124,6 @@
       var directionsService;
 
       var locations;
-
-      
 
       var Boulder = {
       		text: 'Boulder',
@@ -184,7 +179,7 @@
 			zoom: 14,
 			center: pyrmont,
 			mapTypeId: mapType,
-			gestureHandling: 'none'
+			gestureHandling: 'cooperative'
 		});	
 		var iconBase2 = 'Icons/';
 	
@@ -203,7 +198,6 @@
 			["FtCollins", FtCollins.text, FtCollins.info, FtCollins.lat, FtCollins.long, 3],
 			["Longmont", Longmont.text, Longmont.info, Longmont.lat, Longmont.long, 4],
 			["Loveland", Loveland.text, Loveland.info, Loveland.lat, Loveland.long, 5],
-			//["Community", Community.text, Community.info, Community.lat, Community.long, 7],
 		];
 	  
 
@@ -224,8 +218,6 @@
 		
     }
       // End initMap()
-
-		
 		
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
