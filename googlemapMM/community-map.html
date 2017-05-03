@@ -111,9 +111,9 @@
       var map;
       var infowindow;
       var service;
-      var coordinate_1 = 39.406985;
-      var coordinate_2 = -104.888537;
-      //var zoom_level = 14;
+      var coordinate_1 = 40.781185;
+      var coordinate_2 = -111.414293;
+      var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
       var iconBase = 'Icons/';
@@ -125,58 +125,66 @@
 
       var locations;
 
-      var Boulder = {
-      		text: 'Boulder',
-			info: '<strong>Boulder, CO</strong><br>\
-					1777 Broadway, Boulder, CO 80302',
-			lat: 40.015386,
-			long: -105.279616
+      var Ogden = {
+      		text: 'Ogden',
+			info: '<strong>Ogden, UT</strong><br>\
+					133 W 29th St, Ogden, UT 84401',
+			lat: 41.211722,
+			long: -111.979935
 		};
 
-		var Denver = {
-			text: 'Denver',
-			info: '<strong>Denver, CO</strong><br>\
-					101 14th Avenue, Denver, CO 80204',
-			lat: 39.739239,
-			long: -104.988077
+		var SLC = {
+			text: 'Salt Lake City',
+			info: '<strong>Salt Lake City, UT</strong><br>\
+					350 State St, Salt Lake City, UT 84111',
+			lat: 40.776815,
+			long: -111.888247
 		};
 
-		var Dia = {
-			text: 'Dia',
-			info: '<strong>DIA, CO</strong><br>\r\
-					8500 Pena Blvd, Denver, CO 80249',
-			lat: 39.848498,
-			long: -104.673860
+		var Tooele = {
+			text: 'Tooele',
+			info: '<strong>Tooele, UT</strong><br>\r\
+					47 Main St, Tooele, UT 84074',
+			lat: 40.529412,
+			long: -112.297902
 		};
 
-		var FtCollins = {
-			text: 'FtCollins',
-			info: '<strong>Fort Collins, CO</strong><br>\r\
-					424 W Mulberry St, Fort Collins, CO 80521',
-			lat: 40.581869,
-			long: -105.083848
+		var Provo = {
+			text: 'Provo',
+			info: '<strong>Provo, UT</strong><br>\r\
+					351 Center St, Provo, UT 84601',
+			lat: 40.233106,
+			long: -111.664963
 		};
 	
-		var Longmont = {
-			text: 'Longmont',
-			info: '<strong>Longmont, CO</strong><br>\r\
-					350 Kimbark St, Longmont, CO 80501',
-			lat: 40.164268,
-			long: -105.100481
+		var Layton = {
+			text: 'Layton',
+			info: '<strong>Layton, UT</strong><br>\r\
+					437 Wasatch Dr, Layton, UT 84041',
+			lat: 41.066335,
+			long: -111.961557
 		};
 	
-		var Loveland = {
-			text: 'Loveland',
-			info: '<strong>Loveland, CO</strong><br>\r\
-					500 E 3rd St, Loveland, CO 80537',
-			lat: 40.393866,
-			long: -105.069997
+		var AF = {
+			text: 'American Fork',
+			info: '<strong>American Fork, UT</strong><br>\r\
+					51 E Main St, American Fork, UT 84003',
+			lat: 40.377035,
+			long: -111.797344
+		};
+	
+		var ParkCity = {
+			text: 'Park City',
+			info: '<strong>Park City, UT</strong><br>\r\
+					445 Marsac Ave, Park City, UT 84060',
+			lat: 40.644510,
+			long: -111.494914
 		};
 
       // Begin initMap()
     function initMap() {
       	map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 14,
+			zoom: zoom_level,
 			center: pyrmont,
 			mapTypeId: mapType,
 			gestureHandling: 'cooperative'
@@ -192,12 +200,13 @@
 		iconFull3 = iconBase2 + 'pin-com.png';
 		
 		locations = [
-			["Boulder", Boulder.text, Boulder.info, Boulder.lat, Boulder.long, 0],
-			["Denver", Denver.text, Denver.info, Denver.lat, Denver.long, 1],
-			["Dia", Dia.text, Dia.info, Dia.lat, Dia.long, 2],
-			["FtCollins", FtCollins.text, FtCollins.info, FtCollins.lat, FtCollins.long, 3],
-			["Longmont", Longmont.text, Longmont.info, Longmont.lat, Longmont.long, 4],
-			["Loveland", Loveland.text, Loveland.info, Loveland.lat, Loveland.long, 5],
+			["Ogden", Ogden.text, Ogden.info, Ogden.lat, Ogden.long, 0],
+			["SLC", SLC.text, SLC.info, SLC.lat, SLC.long, 1],
+			["Tooele", Tooele.text, Tooele.info, Tooele.lat, Tooele.long, 2],
+			["Provo", Provo.text, Provo.info, Provo.lat, Provo.long, 3],
+			["Layton", Layton.text, Layton.info, Layton.lat, Layton.long, 4],
+			["AF", AF.text, AF.info, AF.lat, AF.long, 5],
+			["ParkCity", ParkCity.text, ParkCity.info, ParkCity.lat, ParkCity.long, 6],
 		];
 
 		var infowindow = new google.maps.InfoWindow({});
