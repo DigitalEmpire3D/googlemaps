@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Google Map API</title>
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="map-style.css" rel="stylesheet">
+		<style type="text/css">
+			#map {
+				height: 780px;
+			}
+			div.toggle {
+				float: right;
+			}
+			
+		</style>
+	</head>
+	<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8" id="map"></div>
+			<div class="col-md-4">
+
+				<div class="form-group">
+
+					<div class="checkbox checkbox-header">
+					Toggle amenities...
+						<label class="text-wrapper-label switch">
+							<input id="toggle-trigger" type="checkbox" data-toggle="toggle" data-size="small" value="">
+							<div class="slider round"></div>
+						</label>
+					</div>
+
+					<div class="checkbox form-input">
+					Schools
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="school">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Restaurants
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="restaurant">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Entertainment
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="movie_theater">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Shopping
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="shopping_mall">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Medical Centers
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="hospital">
+							<div class="slider round"></div>
+						</label>
+					</div>
+					<div class="checkbox form-input">
+					Recreation &amp; Fitness
+						<label class="text-wrapper-label switch">
+							
+							<input class="amenities-input" type="checkbox" data-toggle="toggle" data-size="small" value="gym">
+							<div class="slider round"></div>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="checkbox checkbox-header">
+						Point of Interest
+					</div>
+
+					<div class="checkbox form-input">
+						<!-- <label class="text-wrapper-label switch"> -->
+							<select name="select-list">
+								<option value="">Select One</option>
+							</select>
+						<!-- </label> -->
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox checkbox-header">
+						Driving Directions
+					</div>
+					<div class="checkbox form-input" id="directionsPanel" style="height: auto;">Select an icon from the map.</div>
+					<div class="checkbox form-input clear-data"><a id="clear-directions" href="#">CLEAR</a></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	<script>
+      var map;
+      var infowindow;
+      var service;
+      var coordinate_1 = 40.417698;
+      var coordinate_2 = -111.899774;
+      //var zoom_level = 14;
+      var mapType = "hybrid";
+      var search_radius = 1500;
+	  var iconBase = 'Icons/';
+	  var iconFull = "";
+
+      var pyrmont = {lat: coordinate_1, lng: coordinate_2};
+      var directionsDisplay;
+      var directionsService;
+
+      var locations;
+
+      var Ogden = {
+      		text: 'Ogden',
+			info: '<strong>Ogden, UT</strong><br>\
+					133 W 29th St, Ogden, UT 84401',
+			lat: 41.211722,
+			long: -111.979935
+		};
+
+		var SLC = {
+			text: 'Salt Lake City',
+			info: '<strong>Salt Lake City, UT</strong><br>\
+					350 State St, Salt Lake City, UT 84111',
+			lat: 40.776815,
+			long: -111.888247
+		};
+
+		var Tooele = {
+			text: 'Tooele',
+			info: '<strong>Tooele, UT</strong><br>\r\
+					47 Main St, Tooele, UT 84074',
+			lat: 40.529412,
+			long: -112.297902
+		};
+
+		var Provo = {
+			text: 'Provo',
+			info: '<strong>Provo, UT</strong><br>\r\
+					351 Center St, Provo, UT 84601',
+			lat: 40.233106,
+			long: -111.664963
+		};
+	
+		var Layton = {
+			text: 'Layton',
+			info: '<strong>Layton, UT</strong><br>\r\
+					437 Wasatch Dr, Layton, UT 84041',
+			lat: 41.066335,
+			long: -111.961557
+		};
+	
+		var AF = {
+			text: 'American Fork',
+			info: '<strong>American Fork, UT</strong><br>\r\
+					51 E Main St, American Fork, UT 84003',
+			lat: 40.377035,
+			long: -111.797344
+		};
+	
+		var ParkCity = {
+			text: 'Park City',
+			info: '<strong>Park City, UT</strong><br>\r\
+					445 Marsac Ave, Park City, UT 84060',
+			lat: 40.644510,
+			long: -111.494914
+		};
+
+
+      // Begin initMap()
+      function initMap() {
+      	map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 14,
+			center: pyrmont,
+			mapTypeId: mapType,
+			gestureHandling: 'cooperative'
+		});	
+		var iconBase2 = 'Icons/';
+	
+		var iconFull2 = "";
+	
+		var iconFull3 = "";
+		
+		iconFull2 = iconBase2 + 'pin-dining.png';
+		
+		iconFull3 = iconBase2 + 'pin-com.png';
+		
+		locations = [
+			["Ogden", Ogden.text, Ogden.info, Ogden.lat, Ogden.long, 0],
+			["SLC", SLC.text, SLC.info, SLC.lat, SLC.long, 1],
+			["Tooele", Tooele.text, Tooele.info, Tooele.lat, Tooele.long, 2],
+			["Provo", Provo.text, Provo.info, Provo.lat, Provo.long, 3],
+			["Layton", Layton.text, Layton.info, Layton.lat, Layton.long, 4],
+			["AF", AF.text, AF.info, AF.lat, AF.long, 5],
+			["ParkCity", ParkCity.text, ParkCity.info, ParkCity.lat, ParkCity.long, 6],
+		];
+	  
+
+		var infowindow = new google.maps.InfoWindow({});
+		var marker = new google.maps.Marker({
+         	position: pyrmont,
+         	map: map,
+         	icon: iconFull3,
+        });
+		
+        var request;
+        service = new google.maps.places.PlacesService(map);
+
+		directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+
+        directionsService = new google.maps.DirectionsService;
+		
+    }
+      // End initMap()
+
+		
+		
+	  	function callback(results, status) {
+	        if (status === google.maps.places.PlacesServiceStatus.OK) {
+	        	for (var i = 0; i < results.length; i++) {
+	        		var place = results[i];
+	        		console.log(place);
+	        		createMarker(results[i]);
+	        	}
+	        }
+	    }
+
+	    var school_markers = [];
+	    var restaurant_markers = [];
+	    var movie_theater_markers = [];
+	    var shopping_mall_markers = [];
+	    var hospital_markers = [];
+	    var gym_markers = [];
+
+	    var static_markers = [];
+			
+	    function createMarker(place, arrayToUse) {
+
+	    	var placeLoc = place.geometry.location;
+	    	//console.log(placeLoc)
+
+	    	if (arrayToUse == "school") {
+	    		iconFull = iconBase + 'pin-schools.png';
+
+	    	} else if(arrayToUse == "restaurant") {
+	    		iconFull = iconBase + 'pin-dining.png';
+
+	    	} else if(arrayToUse == "movie_theater") {
+	    		iconFull = iconBase + 'pin-entertainment.png';
+
+	    	} else if(arrayToUse == "shopping_mall") {
+	    		iconFull = iconBase + 'pin-shopping.png';
+
+	    	} else if(arrayToUse == "hospital") {
+	    		iconFull = iconBase + 'pin-services.png';
+
+	    	} else if(arrayToUse == "gym") {
+	    		iconFull = iconBase + 'pin-trails.png';
+	    	}
+
+
+	    	var marker = new google.maps.Marker({
+	    		map: map,
+          		position: place.geometry.location,
+          		icon: iconFull,
+          		size: new google.maps.Size(20, 32),
+	    	});
+
+	    	if (arrayToUse == "school") {
+	    		school_markers.push(marker);
+
+	    	} else if(arrayToUse == "restaurant") {
+	    		restaurant_markers.push(marker);
+
+	    	} else if(arrayToUse == "movie_theater") {
+	    		movie_theater_markers.push(marker);
+
+	    	} else if(arrayToUse == "shopping_mall") {
+	    		shopping_mall_markers.push(marker);
+
+	    	} else if(arrayToUse == "hospital") {
+	    		hospital_markers.push(marker);
+
+	    	} else if(arrayToUse == "gym") {
+	    		gym_markers.push(marker);
+	    	}
+
+			var contentString = '<div class="infowindow">'+
+	    						'</div>';
+
+	    	var infowindow = new google.maps.InfoWindow({
+    			content: contentString
+  			});
+
+	    	google.maps.event.addListener(marker, 'click', function() {
+	    		var latt = place.geometry.location.lat();
+	    		var long = place.geometry.location.lng();
+
+	    		//infowindow.setContent(place.name + "<br /><a data-coord='"+latt+":==:"+long+"' class='driving-directions' href='#'>Drving Directions<a/>");
+	    		infowindow.setContent(place.name);
+	    		infowindow.open(map, this);
+	    		
+	    		calculateAndDisplayRoute(directionsService, directionsDisplay, place.geometry.location.lat(), place.geometry.location.lng())
+	    	});
+
+	    }
+
+	    function createMarker2(arrayKey) {
+	    	
+	    	$.each(locations, function(index) {
+	    		if(locations[index][0] == arrayKey) {
+	    			//console.log(locations[index][3])
+	    			var latt = locations[index][3];
+	    			var long = locations[index][4];
+
+	    			var myLatLng = {lat: latt, lng: long};
+
+	    			iconFull = iconBase + 'pin-driving.png';
+
+	    			var marker = new google.maps.Marker({
+			    		map: map,
+		          		position: myLatLng,
+		          		icon: iconFull,
+		          		size: new google.maps.Size(20, 32),
+			    	});
+
+			    	static_markers.push(marker);
+			    	var contentString = '<div class="infowindow">'+
+			    						'</div>';
+
+			    	var infowindow = new google.maps.InfoWindow({
+		    			content: contentString
+		  			});
+
+			    	google.maps.event.addListener(marker, 'click', function() {
+			    		var latt = latt;
+			    		var long = long;
+
+			    		infowindow.setContent(locations[index][1]);
+			    		infowindow.open(map, this);
+			    		
+			    		calculateAndDisplayRoute(directionsService, directionsDisplay, locations[index][3], locations[index][4])
+			    	});
+
+	    		}
+	    	})
+	    }
+
+
+	    function calculateAndDisplayRoute(directionsService, directionsDisplay, lat, long) {
+	    	var selectedMode = 'DRIVING';
+	    	//console.log(lat);
+	    	//console.log(long);
+	    	//return false;
+	    	directionsService.route({
+	    		origin: {lat: coordinate_1, lng: coordinate_2},
+	    		destination: {lat: lat, lng: long},
+	    		travelMode: google.maps.TravelMode[selectedMode]
+
+	    	}, function(response, status) {
+	    		if (status == 'OK') {
+	    			//document.getElementById('directionsPanel').innerHTML = "";
+	    			directionsDisplay.setDirections(response);
+	    			console.log(response);
+	    		} else {
+	    			window.alert('Directions request failed due to ' + status);
+	    		}
+	    	});
+	    }
+
+    </script>
+    <script src="map-javascript.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8wJT8MJHSRHupE-sddwzDHSxfDgh9nL0&libraries=places&callback=initMap"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>
