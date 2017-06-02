@@ -116,9 +116,9 @@
       //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
-	  var iconBase = 'Icons/';
+      var iconBase = 'Icons/';
 	  var iconFull = "";
-
+	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
       var directionsDisplay;
       var directionsService;
@@ -181,9 +181,8 @@
 			long: -111.494914
 		};
 
-
       // Begin initMap()
-      function initMap() {
+    function initMap() {
       	map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 14,
 			center: pyrmont,
@@ -228,8 +227,6 @@
 		
     }
       // End initMap()
-
-		
 		
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
