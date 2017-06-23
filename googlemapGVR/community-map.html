@@ -113,6 +113,10 @@
       var service;
       var coordinate_1 = 39.790167;
       var coordinate_2 = -104.770213;
+	  var coordinate_3 = 39.782679;
+	  var coordinate_4 = -104.777282;
+	  var coordinate_5 = 39.783078;
+	  var coordinate_6 = -104.778015;
       //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
@@ -120,6 +124,8 @@
 	  var iconFull = "";
      
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
+	  var parkhouse = {lat: coordinate_3, lng: coordinate_4};
+	  var vistapoint = {lat: coordinate_5, lng: coordinate_6};
       var directionsDisplay;
       var directionsService;
 
@@ -187,7 +193,7 @@
 	
 		var iconFull3 = "";
 		
-		iconFull2 = iconBase2 + 'pin-dining.png';
+		iconFull2 = iconBase2 + 'pin-driving.png';
 		
 		iconFull3 = iconBase2 + 'pin-com.png';
 		
@@ -201,13 +207,62 @@
 		];
 	  
 
-		var infowindow = new google.maps.InfoWindow({});
-		var marker = new google.maps.Marker({
+		
+		var contentString2 = '<h5>Green Valley Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Carriage House' +
+							'</body>'
+							'</div>';							
+		var infowindow2 = new google.maps.InfoWindow({
+			content: contentString2
+		});
+		var markerCH = new google.maps.Marker({
          	position: pyrmont,
          	map: map,
          	icon: iconFull3,
         });
+		markerCH.addListener('click', function() {
+			infowindow2.open(map, markerCH);
+		});
 		
+		var contentString3 = '<h5>Green Valley Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Park House' +
+							'</body>'
+							'</div>';							
+		var infowindow3 = new google.maps.InfoWindow({
+			content: contentString3
+		});
+		var markerPH = new google.maps.Marker({
+         	position: parkhouse,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerPH.addListener('click', function() {
+			infowindow3.open(map, markerPH);
+		});
+		
+		var contentString4 = '<h5>Green Valley Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Vista Point' +
+							'</body>'
+							'</div>';							
+		var infowindow4 = new google.maps.InfoWindow({
+			content: contentString4
+		});
+		var markerVP = new google.maps.Marker({
+         	position: vistapoint,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerVP.addListener('click', function() {
+			infowindow4.open(map, markerVP);
+		});
+		
+		var infowindow = new google.maps.InfoWindow({});
         var request;
         service = new google.maps.places.PlacesService(map);
 
