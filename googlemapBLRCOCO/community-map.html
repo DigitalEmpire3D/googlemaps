@@ -18,12 +18,6 @@
 	</head>
 	<body>
 	<div class="container-fluid">
-<!-- 		<div class="row">
-			<div class="col-md-4" style="margin-left: 95px;"><img class="img-responsive" src="holobrook.png"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-4"><img class="img-responsive" src="community.png"></div>
-		</div> -->
 		<div class="row">
 			<div class="col-md-8" id="map"></div>
 			<div class="col-md-4">
@@ -101,38 +95,6 @@
 						<!-- </label> -->
 					</div>
 				</div>
-
-				<!-- <div class="form-group">
-					<div class="checkbox checkbox-header">
-					Choose map layout...
-					</div>
-
-					<div class="checkbox form-input">
-					Satellite
-						<label class="text-wrapper-label switch">
-							
-							<input id="satellite-map" class="map-type" type="checkbox" data-toggle="toggle" data-size="small" value="satellite">
-							<div class="slider round"></div>
-						</label>
-					</div>
-					<div class="checkbox form-input">
-					Terrain
-						<label class="text-wrapper-label switch">
-							
-							<input id="terrain-map" class="map-type" type="checkbox" data-toggle="toggle" data-size="small" value="terrain">
-							<div class="slider round"></div>
-						</label>
-					</div>
-					<div class="checkbox form-input">
-					Hybrid
-						<label class="text-wrapper-label switch">
-							
-							<input id="hybrid-map" class="map-type" type="checkbox" data-toggle="toggle" checked data-size="small" value="hybrid">
-							<div class="slider round"></div>
-						</label>
-					</div>
-				</div> -->
-
 				<div class="form-group">
 					<div class="checkbox checkbox-header">
 						Driving Directions
@@ -140,11 +102,7 @@
 					<div class="checkbox form-input" id="directionsPanel" style="height: auto;">Select an icon from the map.</div>
 					<div class="checkbox form-input clear-data"><a id="clear-directions" href="#">CLEAR</a></div>
 				</div>
-
 			</div>
-
-			<!-- <div class="col-md-8" id="map"></div> -->
-
 		</div>
 	</div>
 	
@@ -154,6 +112,12 @@
       var service;
       var coordinate_1 = 38.929372;
       var coordinate_2 = -104.663744;
+	  var coordinate_3 = 38.934470;
+	  var coordinate_4 = -104.669327;
+	  var coordinate_5 = 38.929020;
+	  var coordinate_6 = -104.661733;
+	  var coordinate_7 = 38.932535;
+	  var coordinate_8 = -104.670057;
       //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
@@ -163,6 +127,9 @@
 	  iconFull = iconBase + 'pin-com.png';
 	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
+	  var overlook = {lat: coordinate_3, lng: coordinate_4};
+	  var carriagehouse = {lat: coordinate_5, lng: coordinate_6};
+	  var parkhouse = {lat: coordinate_7, lng: coordinate_8};
       var directionsDisplay;
       var directionsService;
 
@@ -258,7 +225,7 @@
 			zoom: 14,
 			center: pyrmont,
 			mapTypeId: mapType,
-			gestureHandling: 'none'
+			gestureHandling: 'cooperative'
 		});	
 		var iconBase2 = 'Icons/';
 	
@@ -279,40 +246,83 @@
 			["DTC", DTC.text, DTC.info, DTC.lat, DTC.long, 5],
 			["DCS", DCS.text, DCS.info, DCS.lat, DCS.long, 6],
 			["Manitou", Manitou.text, Manitou.info, Manitou.lat, Manitou.long, 7],
-			["Community", Community.text, Community.info, Community.lat, Community.long, 8],
+			//["Community", Community.text, Community.info, Community.lat, Community.long, 8],
 		];
-	  
 
-		var infowindow = new google.maps.InfoWindow({});
-		var marker = new google.maps.Marker({
+		var contentString2 = '<h5>Banning Lewis Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Colorado Collection' +
+							'</body>'
+							'</div>';							
+		var infowindow2 = new google.maps.InfoWindow({
+			content: contentString2
+		});
+		var markerCC = new google.maps.Marker({
          	position: pyrmont,
          	map: map,
          	icon: iconFull3,
+		});		
+		markerCC.addListener('click', function() {
+			infowindow2.open(map, markerCC);
+		});
+		
+		var contentString3 = '<h5>Banning Lewis Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>The Overlook' +
+							'</body>'
+							'</div>';							
+		var infowindow3 = new google.maps.InfoWindow({
+			content: contentString3
+		});
+		var markerOV = new google.maps.Marker({
+         	position: overlook,
+         	map: map,
+         	icon: iconFull3,
+        });		
+		markerOV.addListener('click', function() {
+			infowindow3.open(map, markerOV);
+		});
+		
+		var contentString4 = '<h5>Banning Lewis Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Carriage House' +
+							'</body>'
+							'</div>';							
+		var infowindow4 = new google.maps.InfoWindow({
+			content: contentString4
+		});		
+		var markerCH = new google.maps.Marker({
+         	position: carriagehouse,
+         	map: map,
+         	icon: iconFull3,
         });
-		/*var marker, i;
-	
-		for (i = 0; i < locations.length; i++) {
-			if (i < 8) {
-				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][3], locations[i][4]),
-				map: map,
-				icon: iconFull2,
-				});
-			} else {
-				marker = new google.maps.Marker({
-				position: new google.maps.LatLng(locations[i][3], locations[i][4]),
-				map: map,
-				icon: iconFull3,
-				});
-			}
-			google.maps.event.addListener(marker, 'click', (function (marker, i) {
-				return function () {
-					infowindow.setContent(locations[i][2]);
-					infowindow.open(map, marker);
-				}
-			})(marker, i));
-		}
-		*/
+		markerCH.addListener('click', function() {
+			infowindow4.open(map, markerCH);
+		});
+		
+		var contentString5 = '<h5>Banning Lewis Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Park House' +
+							'</body>'
+							'</div>';							
+		var infowindow5 = new google.maps.InfoWindow({
+			content: contentString5
+		});			
+		var markerPH = new google.maps.Marker({
+         	position: parkhouse,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerPH.addListener('click', function() {
+			infowindow5.open(map, markerPH);
+		});
+		
+		var infowindow = new google.maps.InfoWindow({});
+		
         var request;
         service = new google.maps.places.PlacesService(map);
 
@@ -323,9 +333,7 @@
 		
     }
       // End initMap()
-
-		
-		
+	
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
 	        	for (var i = 0; i < results.length; i++) {
