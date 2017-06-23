@@ -113,6 +113,8 @@
       var service;
       var coordinate_1 = 40.041851;
       var coordinate_2 = -105.032925;
+	  var coordinate_3 = 40.043171;
+	  var coordinate_4 = -105.033543;
       //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
@@ -120,9 +122,10 @@
 	  var iconFull = "";
 	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
+	  var parkhouse = {lat: coordinate_3, lng: coordinate_4};
       var directionsDisplay;
       var directionsService;
-
+	  
       var locations;
 
       var Boulder = {
@@ -201,13 +204,43 @@
 		];
 	  
 
-		var infowindow = new google.maps.InfoWindow({});
-		var marker = new google.maps.Marker({
+		var contentString2 = '<h5>Erie</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Overlook' +
+							'</body>'
+							'</div>';							
+		var infowindow2 = new google.maps.InfoWindow({
+			content: contentString2
+		});
+		var markerOL = new google.maps.Marker({
          	position: pyrmont,
          	map: map,
          	icon: iconFull3,
         });
+		markerOL.addListener('click', function() {
+			infowindow2.open(map, markerOL);
+		});
 		
+		var contentString3 = '<h5>Erie</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Park House' +
+							'</body>'
+							'</div>';							
+		var infowindow3 = new google.maps.InfoWindow({
+			content: contentString3
+		});
+		var markerPH = new google.maps.Marker({
+			position: parkhouse,
+			map: map,
+			icon: iconFull3,
+		});
+		markerPH.addListener('click', function() {
+			infowindow3.open(map, markerPH);
+		});
+		
+		var infowindow = new google.maps.InfoWindow({});
         var request;
         service = new google.maps.places.PlacesService(map);
 
