@@ -272,6 +272,7 @@
         service = new google.maps.places.PlacesService(map);
 
 		directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
         directionsService = new google.maps.DirectionsService;
@@ -396,15 +397,15 @@
 		    			content: contentString
 		  			});
 
-			    	google.maps.event.addListener(marker, 'click', function() {
-			    		var latt = latt;
-			    		var long = long;
+			    	//google.maps.event.addListener(marker, 'click', function() {
+			    		//var latt = latt;
+			    		//var long = long;
 
-			    		infowindow.setContent(locations[index][1]);
-			    		infowindow.open(map, this);
+			    		//infowindow.setContent(locations[index][1]);
+			    		//infowindow.open(map, this);
 			    		
 			    		calculateAndDisplayRoute(directionsService, directionsDisplay, locations[index][3], locations[index][4])
-			    	});
+			    	//});
 
 	    		}
 	    	})
