@@ -19,6 +19,15 @@ $(function() {
 	}
 
 	$('select[name="select-list"]').on('change', function() {
+		map.setCenter(pyrmont),
+		map.setZoom(14),
+		directionsDisplay.setMap(null);
+		directionsDisplay.setPanel(null);
+		service = new google.maps.places.PlacesService(map);
+		directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
+		directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+		directionsService = new google.maps.DirectionsService;
 		//console.log($(this).val());
 		//movie_theater_markers[i].setMap(null);
 		for(var i = 0; i < static_markers.length; i++) {
@@ -52,6 +61,15 @@ $(function() {
 
 	$('.amenities-input').on('change', function() {
 		var type_search = $(this).val();
+		map.setCenter(pyrmont),
+		map.setZoom(14),
+		directionsDisplay.setMap(null);
+		directionsDisplay.setPanel(null);
+		service = new google.maps.places.PlacesService(map);
+		directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
+		directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+		directionsService = new google.maps.DirectionsService;
 		if($(this).is(':checked')) {
 
 			if (type_search == "school") {
