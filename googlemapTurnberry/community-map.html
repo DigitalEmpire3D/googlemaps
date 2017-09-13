@@ -144,7 +144,7 @@
 		};
 
 		var Dia = {
-			text: 'Dia',
+			text: 'Denver International Airport',
 			info: '<strong>DIA, CO</strong><br>\r\
 					8500 Pena Blvd, Denver, CO 80249',
 			lat: 39.848498,
@@ -175,6 +175,57 @@
 			long: -105.069997
 		};
 
+		function CenterControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to reset the map';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Reset Map';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to default.
+        controlUI.addEventListener('click', function() {
+			map.setCenter(pyrmont),
+			map.setZoom(14),
+			directionsDisplay.setMap(null);
+			directionsDisplay.setPanel(null);
+			service = new google.maps.places.PlacesService(map);
+			directionsDisplay = new google.maps.DirectionsRenderer;
+			directionsDisplay.setMap(map);
+			directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+			directionsService = new google.maps.DirectionsService;	
+		});
+
+		<!-- '#toggle-trigger'.addEventListener('change', function() { -->
+			<!-- map.setCenter(pyrmont), -->
+			<!-- map.setZoom(14), -->
+			<!-- directionsDisplay.setMap(null); -->
+			<!-- directionsDisplay.setPanel(null); -->
+			<!-- service = new google.maps.places.PlacesService(map); -->
+			<!-- directionsDisplay = new google.maps.DirectionsRenderer; -->
+			<!-- directionsDisplay.setMap(map); -->
+			<!-- directionsDisplay.setPanel(document.getElementById('directionsPanel')); -->
+			<!-- directionsService = new google.maps.DirectionsService; -->
+		<!-- }); -->
+      }
+	  
       // Begin initMap()
     function initMap() {
       	map = new google.maps.Map(document.getElementById('map'), {
@@ -202,18 +253,24 @@
 			["Loveland", Loveland.text, Loveland.info, Loveland.lat, Loveland.long, 5],
 		];
 	  
-
-		var infowindow = new google.maps.InfoWindow({});
-		var marker = new google.maps.Marker({
+		var contentString2 = '<h5>Turnberry</h5>';							
+		var infowindow2 = new google.maps.InfoWindow({
+			content: contentString2
+		});
+		var markerTB = new google.maps.Marker({
          	position: pyrmont,
          	map: map,
          	icon: iconFull3,
         });
+		markerTB.addListener('click', function() {
+			infowindow2.open(map, markerTB);
+		});
 		
         var request;
         service = new google.maps.places.PlacesService(map);
 
 		directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
         directionsService = new google.maps.DirectionsService;
@@ -340,15 +397,15 @@
 		    			content: contentString
 		  			});
 
-			    	google.maps.event.addListener(marker, 'click', function() {
-			    		var latt = latt;
-			    		var long = long;
+			    	//google.maps.event.addListener(marker, 'click', function() {
+			    		//var latt = latt;
+			    		//var long = long;
 
-			    		infowindow.setContent(locations[index][1]);
-			    		infowindow.open(map, this);
+			    		//infowindow.setContent(locations[index][1]);
+			    		//infowindow.open(map, this);
 			    		
 			    		calculateAndDisplayRoute(directionsService, directionsDisplay, locations[index][3], locations[index][4])
-			    	});
+			    	//});
 
 	    		}
 	    	})
