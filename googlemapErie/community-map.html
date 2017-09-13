@@ -127,7 +127,6 @@
       var directionsService;
 	  
       var locations;
-
       var Boulder = {
       		text: 'Boulder',
 			info: '<strong>Boulder, CO</strong><br>\
@@ -135,7 +134,6 @@
 			lat: 40.015386,
 			long: -105.279616
 		};
-
 		var Denver = {
 			text: 'Denver',
 			info: '<strong>Denver, CO</strong><br>\
@@ -143,7 +141,6 @@
 			lat: 39.739239,
 			long: -104.988077
 		};
-
 		var Dia = {
 			text: 'Dia',
 			info: '<strong>DIA, CO</strong><br>\r\
@@ -151,7 +148,6 @@
 			lat: 39.848498,
 			long: -104.673860
 		};
-
 		var FtCollins = {
 			text: 'FtCollins',
 			info: '<strong>Fort Collins, CO</strong><br>\r\
@@ -199,10 +195,8 @@
 			lat: 40.377511,
 			long: -105.520350
 		};
-
 	  function CenterControl(controlDiv, map) {
-
-        // Set CSS for the control border.
+        // Set CSS for the reset button border.
         var controlUI = document.createElement('div');
         controlUI.style.backgroundColor = '#fff';
         controlUI.style.border = '2px solid #fff';
@@ -213,8 +207,8 @@
         controlUI.style.textAlign = 'center';
         controlUI.title = 'Click to reset the map';
         controlDiv.appendChild(controlUI);
-
-        // Set CSS for the control interior.
+		
+        // Set CSS for the reset button interior.
         var controlText = document.createElement('div');
         controlText.style.color = 'rgb(25,25,25)';
         controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
@@ -224,31 +218,13 @@
         controlText.style.paddingRight = '5px';
         controlText.innerHTML = 'Reset Map';
         controlUI.appendChild(controlText);
-
+		
         // Setup the click event listeners: simply set the map to default.
         controlUI.addEventListener('click', function() {
-			map.setCenter(pyrmont),
-			map.setZoom(14),
-			directionsDisplay.setMap(null);
-			directionsDisplay.setPanel(null);
-			service = new google.maps.places.PlacesService(map);
-			directionsDisplay = new google.maps.DirectionsRenderer;
-			directionsDisplay.setMap(map);
-			directionsDisplay.setPanel(document.getElementById('directionsPanel'));
-			directionsService = new google.maps.DirectionsService;	
+			Reset();
+			
 		});
 
-		<!-- '#toggle-trigger'.addEventListener('change', function() { -->
-			<!-- map.setCenter(pyrmont), -->
-			<!-- map.setZoom(14), -->
-			<!-- directionsDisplay.setMap(null); -->
-			<!-- directionsDisplay.setPanel(null); -->
-			<!-- service = new google.maps.places.PlacesService(map); -->
-			<!-- directionsDisplay = new google.maps.DirectionsRenderer; -->
-			<!-- directionsDisplay.setMap(map); -->
-			<!-- directionsDisplay.setPanel(document.getElementById('directionsPanel')); -->
-			<!-- directionsService = new google.maps.DirectionsService; -->
-		<!-- }); -->
       }
 		      // Begin initMap()
     function initMap() {
@@ -258,10 +234,8 @@
 			mapTypeId: mapType,
 			gestureHandling: 'cooperative'
 		});	
-
 		var centerControlDiv = document.createElement('div');
         var centerControl = new CenterControl(centerControlDiv, map);
-
         centerControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 		
@@ -287,7 +261,6 @@
 			["Estes", Estes.text, Estes.info, Estes.lat, Estes.long, 8],
 		];
 	  
-
 		var contentString2 = '<h5>Erie</h5>' +
 							'</div>'+
 							'<div>'+
@@ -327,18 +300,97 @@
 		var infowindow = new google.maps.InfoWindow({});
         var request;
         service = new google.maps.places.PlacesService(map);
-
 		directionsDisplay = new google.maps.DirectionsRenderer;
 		directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));
-
         directionsService = new google.maps.DirectionsService;
 	 
 	 
     }
       // End initMap()
-
-
+	  
+	function Reset() {
+      	map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 14,
+			center: pyrmont,
+			mapTypeId: mapType,
+			gestureHandling: 'cooperative'
+		});	
+		var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+		
+		var iconBase2 = 'Icons/';
+	
+		var iconFull2 = "";
+	
+		var iconFull3 = "";
+		
+		iconFull2 = iconBase2 + 'pin-dining.png';
+		
+		iconFull3 = iconBase2 + 'pin-com.png';
+		
+		locations = [
+			["Boulder", Boulder.text, Boulder.info, Boulder.lat, Boulder.long, 0],
+			["Denver", Denver.text, Denver.info, Denver.lat, Denver.long, 1],
+			["Dia", Dia.text, Dia.info, Dia.lat, Dia.long, 2],
+			["FtCollins", FtCollins.text, FtCollins.info, FtCollins.lat, FtCollins.long, 3],
+			["Longmont", Longmont.text, Longmont.info, Longmont.lat, Longmont.long, 4],
+			["Loveland", Loveland.text, Loveland.info, Loveland.lat, Loveland.long, 5],
+			["Broomfield", Broomfield.text, Broomfield.info, Broomfield.lat, Broomfield.long, 6],
+			["Interlocken", Interlocken.text, Interlocken.info, Interlocken.lat, Interlocken.long, 7],
+			["Estes", Estes.text, Estes.info, Estes.lat, Estes.long, 8],
+		];
+	  
+		var contentString2 = '<h5>Erie</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Overlook' +
+							'</body>'
+							'</div>';							
+		var infowindow2 = new google.maps.InfoWindow({
+			content: contentString2
+		});
+		var markerOL = new google.maps.Marker({
+         	position: pyrmont,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerOL.addListener('click', function() {
+			infowindow2.open(map, markerOL);
+		});
+		
+		var contentString3 = '<h5>Erie</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Park House' +
+							'</body>'
+							'</div>';							
+		var infowindow3 = new google.maps.InfoWindow({
+			content: contentString3
+		});
+		var markerPH = new google.maps.Marker({
+			position: parkhouse,
+			map: map,
+			icon: iconFull3,
+		});
+		markerPH.addListener('click', function() {
+			infowindow3.open(map, markerPH);
+		});
+		
+		var infowindow = new google.maps.InfoWindow({});
+        var request;
+        service = new google.maps.places.PlacesService(map);
+		directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+        directionsService = new google.maps.DirectionsService;
+	 
+	 
+    }
+	//end of reset function
+	
 	  	function callback(results, status) {
 	        if (status === google.maps.places.PlacesServiceStatus.OK) {
 	        	for (var i = 0; i < results.length; i++) {
@@ -348,70 +400,51 @@
 	        	}
 	        }
 	    }
-
 	    var school_markers = [];
 	    var restaurant_markers = [];
 	    var movie_theater_markers = [];
 	    var shopping_mall_markers = [];
 	    var hospital_markers = [];
 	    var gym_markers = [];
-
 	    var static_markers = [];
 			
 	    function createMarker(place, arrayToUse) {
-
 	    	var placeLoc = place.geometry.location;
 	    	//console.log(placeLoc)
-
 	    	if (arrayToUse == "school") {
 	    		iconFull = iconBase + 'pin-schools.png';
-
 	    	} else if(arrayToUse == "restaurant") {
 	    		iconFull = iconBase + 'pin-dining.png';
-
 	    	} else if(arrayToUse == "movie_theater") {
 	    		iconFull = iconBase + 'pin-entertainment.png';
-
 	    	} else if(arrayToUse == "shopping_mall") {
 	    		iconFull = iconBase + 'pin-shopping.png';
-
 	    	} else if(arrayToUse == "hospital") {
 	    		iconFull = iconBase + 'pin-services.png';
-
 	    	} else if(arrayToUse == "gym") {
 	    		iconFull = iconBase + 'pin-trails.png';
 	    	}
-
-
 	    	var marker = new google.maps.Marker({
 	    		map: map,
           		position: place.geometry.location,
           		icon: iconFull,
           		size: new google.maps.Size(20, 32),
 	    	});
-
 	    	if (arrayToUse == "school") {
 	    		school_markers.push(marker);
-
 	    	} else if(arrayToUse == "restaurant") {
 	    		restaurant_markers.push(marker);
-
 	    	} else if(arrayToUse == "movie_theater") {
 	    		movie_theater_markers.push(marker);
-
 	    	} else if(arrayToUse == "shopping_mall") {
 	    		shopping_mall_markers.push(marker);
-
 	    	} else if(arrayToUse == "hospital") {
 	    		hospital_markers.push(marker);
-
 	    	} else if(arrayToUse == "gym") {
 	    		gym_markers.push(marker);
 	    	}
-
 			var contentString = '<div class="infowindow">'+
 	    						'</div>';
-
 	    	var infowindow = new google.maps.InfoWindow({
     			content: contentString
   			});
@@ -421,20 +454,16 @@
 					infowindow.close();
 				}
 			});
-
 	    	google.maps.event.addListener(marker, 'click', function() {
 	    		var latt = place.geometry.location.lat();
 	    		var long = place.geometry.location.lng();
-
 	    		//infowindow.setContent(place.name + "<br /><a data-coord='"+latt+":==:"+long+"' class='driving-directions' href='#'>Drving Directions<a/>");
 	    		infowindow.setContent(place.name);
 	    		infowindow.open(map, this);
 	    		
 	    		calculateAndDisplayRoute(directionsService, directionsDisplay, place.geometry.location.lat(), place.geometry.location.lng())
 	    	});
-
 	    }
-
 	    function createMarker2(arrayKey) {
 	    	
 	    	$.each(locations, function(index) {
@@ -442,30 +471,23 @@
 	    			//console.log(locations[index][3])
 	    			var latt = locations[index][3];
 	    			var long = locations[index][4];
-
 	    			var myLatLng = {lat: latt, lng: long};
-
 	    			iconFull = iconBase + 'pin-driving.png';
-
 	    			var marker = new google.maps.Marker({
 			    		map: map,
 		          		position: myLatLng,
 		          		icon: iconFull,
 		          		size: new google.maps.Size(20, 32),
 			    	});
-
 			    	static_markers.push(marker);
 			    	var contentString = '<div class="infowindow">'+
 			    						'</div>';
-
 			    	var infowindow = new google.maps.InfoWindow({
 		    			content: contentString
 		  			});
-
 			    	//google.maps.event.addListener(marker, 'click', function() {
 			    		//var latt = latt;
 			    		//var long = long;
-
 			    		//infowindow.setContent(locations[index][1]);
 			    		//infowindow.open(map, this);
 			    		
@@ -475,8 +497,6 @@
 	    		}
 	    	})
 	    }
-
-
 	    function calculateAndDisplayRoute(directionsService, directionsDisplay, lat, long) {
 	    	var selectedMode = 'DRIVING';
 	    	//console.log(lat);
@@ -486,7 +506,6 @@
 	    		origin: {lat: coordinate_1, lng: coordinate_2},
 	    		destination: {lat: lat, lng: long},
 	    		travelMode: google.maps.TravelMode[selectedMode]
-
 	    	}, function(response, status) {
 	    		if (status == 'OK') {
 	    			//document.getElementById('directionsPanel').innerHTML = "";
@@ -497,7 +516,6 @@
 	    		}
 	    	});
 	    }
-
     </script>
     <script src="map-javascript.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8wJT8MJHSRHupE-sddwzDHSxfDgh9nL0&libraries=places&callback=initMap"></script>
