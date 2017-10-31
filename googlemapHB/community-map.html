@@ -113,6 +113,8 @@
       var service;
       var coordinate_1 = 40.417698;
       var coordinate_2 = -111.899774;
+	  var coordinate_3 = 40.417200; 
+	  var coordinate_4 = -111.892469;
       //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
@@ -120,6 +122,7 @@
 	  var iconFull = "";
 	     
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
+	  var hbch = {lat: coordinate_3, lng: coordinate_4};
       var directionsDisplay;
       var directionsService;
 
@@ -276,6 +279,24 @@
         });
 		markerHB.addListener('click', function() {
 			infowindow2.open(map, markerHB);
+		});
+		
+		var contentString3 = '<h5>Holbrook Farms</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Carriage House' +
+							'</body>'
+							'</div>';							
+		var infowindow3 = new google.maps.InfoWindow({
+			content: contentString3
+		});
+		var markerHBCH = new google.maps.Marker({
+         	position: hbch,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerHBCH.addListener('click', function() {
+			infowindow3.open(map, markerHBCH);
 		});
 		
         var request;
