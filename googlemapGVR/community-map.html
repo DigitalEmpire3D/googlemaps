@@ -117,6 +117,9 @@
 	  var coordinate_4 = -104.777282;
 	  var coordinate_5 = 39.783078;
 	  var coordinate_6 = -104.778015;
+	  var coordinate_7 = 39.784871;
+	  var coordinate_8 = -104.742602;
+	  
       //var zoom_level = 14;
       var mapType = "hybrid";
       var search_radius = 1500;
@@ -126,6 +129,8 @@
       var pyrmont = {lat: coordinate_1, lng: coordinate_2};
 	  var parkhouse = {lat: coordinate_3, lng: coordinate_4};
 	  var vistapoint = {lat: coordinate_5, lng: coordinate_6};
+	  var enclave = {lat: coordinate_7, lng: coordinate_8};
+	  
       var directionsDisplay;
       var directionsService;
 
@@ -311,6 +316,24 @@
         });
 		markerVP.addListener('click', function() {
 			infowindow4.open(map, markerVP);
+		});
+		
+		var contentString5 = '<h5>Green Valley Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>The Enclave' +
+							'</body>'
+							'</div>';							
+		var infowindow5 = new google.maps.InfoWindow({
+			content: contentString5
+		});
+		var markerEN = new google.maps.Marker({
+         	position: enclave,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerEN.addListener('click', function() {
+			infowindow5.open(map, markerEN);
 		});
 		
 		var infowindow = new google.maps.InfoWindow({});
