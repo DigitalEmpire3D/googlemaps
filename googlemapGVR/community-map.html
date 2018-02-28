@@ -119,6 +119,8 @@
 	  var coordinate_6 = -104.778015;
 	  var coordinate_7 = 39.784871;
 	  var coordinate_8 = -104.742602;
+	  var coordinate_9 = 39.793077;
+	  var coordinate_10 = -104.762098;
 	  
       //var zoom_level = 14;
       var mapType = "hybrid";
@@ -130,6 +132,7 @@
 	  var parkhouse = {lat: coordinate_3, lng: coordinate_4};
 	  var vistapoint = {lat: coordinate_5, lng: coordinate_6};
 	  var enclave = {lat: coordinate_7, lng: coordinate_8};
+	  var fwvillas = {lat: coordinate_9, lng: coordinate_10};
 	  
       var directionsDisplay;
       var directionsService;
@@ -334,6 +337,25 @@
         });
 		markerEN.addListener('click', function() {
 			infowindow5.open(map, markerEN);
+		});
+		
+		var contentString6 = '<h5>Green Valley Ranch</h5>' +
+							'</div>'+
+							'<div>'+
+							'<body>Bungalows at '+
+							'<body>Fairway Villas' +
+							'</body>'
+							'</div>';							
+		var infowindow6 = new google.maps.InfoWindow({
+			content: contentString6
+		});
+		var markerFV = new google.maps.Marker({
+         	position: fwvillas,
+         	map: map,
+         	icon: iconFull3,
+        });
+		markerFV.addListener('click', function() {
+			infowindow6.open(map, markerFV);
 		});
 		
 		var infowindow = new google.maps.InfoWindow({});
